@@ -39,9 +39,9 @@
 ### Association
 
 - belongs_to :user
-- has_one :recording
+- has_one :orders
 
-## recordings テーブル
+## orders テーブル
 
 | Column | Type       | Options                        |
 | ------ | ---------- | ------------------------------ |
@@ -65,10 +65,10 @@
 | house_number     | string     | null: false |
 | building_number  | string     |             |
 | phone_number     | string     | null: false |
-| recording        | references | null: false, foreign_key: true |
+| order            | references | null: false, foreign_key: true |
 
 
 ### Association
 
-- belongs_to :recording
+- belongs_to :order
 
