@@ -7,12 +7,13 @@ RSpec.describe User, type: :model do
 
   describe 'ユーザー新規登録' do
     context 'ユーザー新規登録ができる時' do
-      it '全ての値が正しければ登録できる'
-        @user.valid?
+      it '全ての値が正しければ登録できる' do
+        expect(@user).to be_valid
       end
       it 'passwordとpassword_confirmationが6文字以上であれば登録できる' do
         @user.password = 'aaaaaaa666'
-        @user.valid?
+        @user.password_confirmation ='aaaaaaa666'
+        expect(@user).to be_valid
       end
     end
    
@@ -40,8 +41,8 @@ RSpec.describe User, type: :model do
         expect(another_user.errors.full_messages).to include('Email has already been taken')
       end
       it 'メールアドレスは、@が存在しないと登録できない' do
-        @user.email = 'user@example.com'
-        expect(@user).to be_valid
+        @user.email = 'userexample.com'
+        @user.valid?
         expect(@user.errors.full_messages).to include("Email is invalid")
       end
       it 'passwordが空では登録できない' do
@@ -55,12 +56,13 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("Password is invalid")
       end
       it 'パスワードは、数字のみでは登録できないこと'  do
-        @user.password = '432804328328'
+        @user.password = 432804328328
         @user.valid?
         expect(@user.errors.full_messages).to include("Password is invalid")
       end
       it 'パスワードは、全角英数字混同では登録できないこと'  do
         @user.password = 'fjdii32ああ'
+        @user.password_confirmation = 'fjdii32ああ'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password is invalid")
       end
@@ -123,3 +125,4 @@ RSpec.describe User, type: :model do
     end
   end
 end
+
