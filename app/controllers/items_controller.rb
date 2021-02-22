@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :move_to_login, except: [:index,:show]
   before_action :get_params, only:[:edit,:update,:show]
+  before_action :block, only:[:edit,:update]
 
   def index
     @items = Item.all.order('created_at DESC')
@@ -23,9 +24,6 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    unless current_user.id == @item.user_id
-      redirect_to root_path 
-    end
   end
 
   def update
@@ -51,6 +49,12 @@ class ItemsController < ApplicationController
 
   def get_params
     @item = Item.find(params[:id])
+  end
+
+  def block
+    unless current_user.id == @item.user_id
+      redirect_to root_path 
+    end
   end
 
 end
