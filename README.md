@@ -19,7 +19,7 @@
 ### Association
 
 - has_many :items
-- has_many :recordings
+- has_many :orders
 
 ## items テーブル
 
