@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :move_to_login, except: [:index,:show]
-  before_action :get_params, only:[:edit,:update,:show]
-  before_action :block, only:[:edit,:update]
+  before_action :get_params, only:[:edit,:update,:show,:destroy]
+  before_action :block, only:[:edit,:update,:destroy]
 
   def index
     @items = Item.all.order('created_at DESC')
@@ -32,6 +32,11 @@ class ItemsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @item.destroy
+    redirect_to root_path
   end
 
   private
