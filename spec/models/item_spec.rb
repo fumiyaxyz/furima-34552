@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe Item, type: :model do
   before do
     @item = FactoryBot.build(:item)
-    @item.image = Rack::Test::UploadedFile.new(File.join(Rails.root, 'public/images/rails.png'), 'image/png')
   end
 
   describe '商品の出品' do
