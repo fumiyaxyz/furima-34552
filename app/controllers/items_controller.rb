@@ -6,7 +6,6 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all.order('created_at DESC')
-    @orders
   end
 
   def new
@@ -66,7 +65,7 @@ class ItemsController < ApplicationController
   end
   
   def block_edit
-    if Order.find_by(item_id: params[:id])
+    if @item.order.present?
       redirect_to root_path
     end
   end

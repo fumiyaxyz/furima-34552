@@ -13,6 +13,10 @@ RSpec.describe OrderAddress, type: :model do
       it  '全ての情報が正しければ購入できる' do
         expect(@order_address).to be_valid
       end
+      it '建物名がなくても購入できる' do
+        @order_address.building_number=''
+        expect(@order_address).to be_valid
+      end
     end
 
     context '商品の購入ができない時' do
