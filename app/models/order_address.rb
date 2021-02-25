@@ -1,6 +1,6 @@
 class OrderAddress
   include ActiveModel::Model
-  attr_accessor  :user_id, :item_id,:postal_code, :prefecture_id, :city, :house_number, :building_number,:phone_number
+  attr_accessor  :user_id, :item_id,:postal_code, :prefecture_id, :city, :house_number, :building_number,:phone_number,:token
 
   # ここにバリデーションの処理を書く
   with_options presence: true do
@@ -11,6 +11,7 @@ class OrderAddress
     validates  :city
     validates  :house_number
     validates  :phone_number, format: {with: /\A\d{6,11}\z/}
+    validates  :token
   end
 
 
