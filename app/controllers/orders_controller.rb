@@ -1,6 +1,8 @@
 class OrdersController < ApplicationController
-  before_action :move_to_login
-  before_action :block
+  before_action :move_to_login, only: :index
+  before_action :block, only: :index
+  before_action :block_index, only: :index
+
 
   def index
     @order_address = OrderAddress.new
@@ -40,6 +42,12 @@ class OrdersController < ApplicationController
     def block
       if current_user.id == Item.find(params[:item_id]).user_id
         redirect_to root_path 
+      end
+    end
+
+    def block_index
+      if Order.find_by(item_id: params[:item_id])
+        redirect_to root_path
       end
     end
 end
