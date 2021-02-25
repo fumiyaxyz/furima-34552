@@ -1,4 +1,7 @@
 class OrdersController < ApplicationController
+  before_action :move_to_login
+  before_action :block
+
   def index
     @order_address = OrderAddress.new
   end
@@ -26,5 +29,17 @@ class OrdersController < ApplicationController
         card: get_params[:token],    # カードトークン
         currency: 'jpy'                 # 通貨の種類（日本円）
       )
+    end
+
+    def move_to_login
+      unless user_signed_in?
+        redirect_to  user_session_path
+      end
+    end
+  
+    def block
+      if current_user.id == Item.find(params[:item_id]).user_id
+        redirect_to root_path 
+      end
     end
 end

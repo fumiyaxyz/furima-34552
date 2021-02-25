@@ -132,13 +132,13 @@
         <div class='item-img-content'>
           <%= image_tag item.image, class: "item-img" %>
 
-          <%# unless item.id == @orders.item_id%>
+          <% if Order.find_by(item_id: item.id)%>
           <%# 商品が売れていればsold outを表示しましょう %>
           <div class='sold-out'>
             <span>Sold Out!!</span>
           </div>
           <%# //商品が売れていればsold outを表示しましょう %>
-          <%# end %>
+          <% end %>
 
         </div>
         <div class='item-info'>
