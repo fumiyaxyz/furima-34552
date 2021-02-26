@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :move_to_login, except: [:index,:show]
   before_action :get_params, only:[:edit,:update,:show,:destroy]
   before_action :block, only:[:edit,:update,:destroy]
+  before_action :block_order, only: [:edit,:update]
 
   def index
     @items = Item.all.order('created_at DESC')
@@ -21,6 +22,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    
   end
 
   def edit
@@ -61,5 +63,10 @@ class ItemsController < ApplicationController
       redirect_to root_path 
     end
   end
-
+  
+  def block_order
+    if @item.order.present?
+      redirect_to root_path
+    end
+  end
 end
