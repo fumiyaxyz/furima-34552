@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
   before_action :get_params
   before_action :authenticate_user! 
-  before_action :block, only: :index
-  before_action :block_index, only: :index
+  before_action :block, only: [:index,:create]
+  before_action :block_empty, only: [:index,:create]
 
 
   def index
@@ -46,7 +46,7 @@ class OrdersController < ApplicationController
       end
     end
 
-    def block_index
+    def block_empty
       if @item.order.present?
         redirect_to root_path
       end
