@@ -227,3 +227,12 @@
 .inc {
   font-size: 13px;
 }
+
+.image-size{
+  height: auto;
+  width: 50%;
+  margin: 0 auto;
+}
+.image-list{
+  text-align: center;
+}
