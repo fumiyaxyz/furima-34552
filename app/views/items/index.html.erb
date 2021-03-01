@@ -127,33 +127,47 @@
 
     
       <% @items.each do |item| %>
-      <li class='list'>
-        <%= link_to item_path(item) do %>
-        <div class='item-img-content'>
-          <%= image_tag item.image, class: "item-img" %>
+        <li class='list'>
+          <%= link_to item_path(item) do %>
+          <div class='item-img-content'>
+            <%= image_tag item.image, class: "item-img" %>
 
-          <% if item.order.present?%>
-          <div class='sold-out'>
-            <span>Sold Out!!</span>
+            <% if item.order.present?%>
+            <div class='sold-out'>
+              <span>Sold Out!!</span>
+            </div>
+            <% end %>
+
           </div>
-          <% end %>
-
-        </div>
-        <div class='item-info'>
-          <h3 class='item-name'>
-            <%= item.name %>
-          </h3>
-          <div class='item-price'>
-            <span><%= item.price %>円<br><%= item.delivery_fee.name %></span>
-            <div class='star-btn'>
-              <%= image_tag "star.png", class:"star-icon" %>
-              <span class='star-count'>0</span>
+          <div class='item-info'>
+            <h3 class='item-name'>
+              <%= item.name %>
+            </h3>
+            <div class='item-price'>
+              <span><%= item.price %>円<br><%= item.delivery_fee.name %></span>
+              <div class='star-btn'>
+                <% if user_signed_in? %>
+                  <% if item.favorited_by?(current_user) %> <!-- ログインしているユーザーがファボしたかどうかで分岐 -->
+                    <%=link_to item_favorites_path(item.id), method: :delete do %>
+                      <i class="fa fa-heart unlike-btn"></i>
+                      <p><%= item.favorites.count %></p>
+                    <% end %>
+                  <% else %>
+                    <%=link_to item_favorites_path(item.id), method: :post  do %>
+                      <i class="fa fa-heart like-btn"></i>
+                      <p><%= item.favorites.count %></p>
+                    <% end %>
+                  <% end %>
+                <% else %>
+                  <p><span>いいね数: </span><%= item.favorites.count %></p>
+                <% end %>
+              </div>
             </div>
           </div>
-        </div>
-        <% end %>
-      </li>
+          <% end %>
+        </li>
       <% end %>
+    
 
       <% if @items.length == 0 %>
         <li class='list'>
