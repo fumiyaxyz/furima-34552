@@ -4,6 +4,7 @@ class Item < ApplicationRecord
   belongs_to :user
   has_one    :order
   has_one_attached :image
+  has_many :favorites
 
   with_options presence: true do
     validates  :name
@@ -19,6 +20,10 @@ class Item < ApplicationRecord
       validates  :ship_days_id
     end
   end
+
+  def favorited_by?(user)
+    favorites.where(user_id: user.id).exists?
+  end 
 
   belongs_to_active_hash :category
   belongs_to_active_hash :status
